@@ -26,6 +26,7 @@ using namespace std;
 
 // prototype declarations
 
+void    fillArray(int array[]);                 //Fills array with zeroes
 void    getTests ( int testArray[]);		//prompts for tests and validate
 double  average ( int testArray[] );		//computes average
 char    results ( double Average_Of_Tests, int testArray[]);//determines final grade
@@ -48,11 +49,7 @@ int  main( )
     double  Average_Of_Tests = 0.0;					// average of tests
     char    Grade;									// course grade
 
-    for (int j = 0; j < 3; j++)
-    {
-        tests[j] = 0;
-    }
-
+    fillArray( tests );                         //function call to fill array with zeroes
     getTests( tests );							//function call to get tests
     Average_Of_Tests = average( tests );		//function call to compute average
     Grade = results( Average_Of_Tests, tests );	//function call to detrmine grade
@@ -66,10 +63,34 @@ int  main( )
 ///////////////////////////////////////////////////////////////////////////////
 
 
+///////////////////// fillArray function //////////////////////////////////////
+//
+// Function Name: fillArray
+//
+// Purpose: Fill array with zeroes`
+//
+// Input Parameters: int[] array
+//
+// Output Parameters: Void
+//
+// Return Value: void
+//
+//////////////////////////////////////////////////////////////////////////////
+
+void fillArray(int array[])
+{
+    for (int j = 0; j < 3; j++)
+    {
+        array[j] = 0;
+    }
+}
 
 
 
 
+
+
+    
 
 ///////////////////// greet function //////////////////////////////////////////
 //
@@ -100,8 +121,18 @@ void getTests( int testArray[] )
         testArray[i] = test;
         if (testArray[i] > 100 || testArray[i] < 0) 
         {
-            cout << "Invalid input please input your test again ";
+            cout << endl << "Invalid input please input your test again ";
             --i;
+        }
+        if (!cin) 
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input please input your test again " << endl << endl;
+            fillArray(testArray);
+            getTests(testArray);
+            return;
+
         }
     }
     //use for loop to get tests and validate user input
